@@ -1,0 +1,1 @@
+{{ $condition && $product->categories()->where('id', $child->id)->exists()  ? 'checked' : '' }}

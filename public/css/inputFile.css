@@ -1,0 +1,17 @@
+input[type=file].form-control {
+    display: inline-block;
+    height: auto;
+    padding: 8px 20px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input::file-selector-button {
+    display: inline-block;
+    padding: 8px 10px;
+    background-color: #337AB7;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
