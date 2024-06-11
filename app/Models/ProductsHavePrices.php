@@ -10,7 +10,6 @@ class ProductsHavePrices extends Model
 {
     use HasFactory;
     protected $fillable = ['product_id', 'start_date', 'end_date', 'price'];
-    public $timestamps = false;
 
     public function product()
     {

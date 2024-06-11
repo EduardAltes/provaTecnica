@@ -2,7 +2,7 @@ input[type=file].form-control {
     display: inline-block;
     height: auto;
     padding: 8px 20px;
-    color: #fff;
+    color: gray;
     border-radius: 5px;
     cursor: pointer;
 }

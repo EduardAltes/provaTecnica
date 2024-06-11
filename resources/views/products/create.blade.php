@@ -5,8 +5,8 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/script.js') }}"></script>
-<script src="{{ asset('js/addBtn.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/addBtn.js') }}"></script>
 @endsection
 
 @include('partials.apart', ["site" => "products"])

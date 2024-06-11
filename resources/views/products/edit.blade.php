@@ -8,6 +8,7 @@
 
 @section('js')
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/addBtn.js') }}"></script>
 @endsection
 
 @section('content')
@@ -39,16 +40,37 @@
                     @endif
                 @endforeach
             </div>
+            <div id="prices" class="form-group">
+                <label for="prices">Prices</label></br>
+                
+                @foreach ($product->prices as $price)
+                    <div>
+                        Start Date
+                        <input type="date" name="start_dates[]" class="form-control" value="{{ $price->start_date }}">
+                        End Date
+                        <input type="date" name="end_dates[]" class="form-control" value="{{ $price->end_date }}">
+                        Prices
+                        <input type="number" name="prices[]" class="form-control" step="0.01" min="0.00" max="999.99" value="{{ $price->price }}">
+                        <button type="button" class="btn btn-danger delete-btn" style="background-color: rgb(207, 52, 52); margin: 10px 0">Delete</button>
+                    </div>
+                @endforeach
+                
+                <button type="button" id="addBtn" class="btn" style="background-color: rgb(62, 146, 100); margin: 10px 0; color: white">Add</button>
+            </div>
             <div class="form-group">
                 <label for="photos">Photos</label>
                 <div>
                     @foreach ($product->photos as $photo)
-                        <img src="data:image/jpeg;base64,{{ base64_encode($photo->photo) }}" alt="Photo" width="100">
+                        <div>
+                            <img src="data:image/jpeg;base64,{{ base64_encode($photo->photo) }}" alt="Photo" width="100" style="margin:10px 0">
+                            <input type="hidden" name="photos64[]" value="{{ base64_encode($photo->photo) }}">
+                            <button type="button" class="btn btn-danger delete-btn" style="background-color: rgb(207, 52, 52); margin: 10px">Delete</button>
+                        </div>
                     @endforeach
+                    {{-- <input type="checkbox" name="delete" value="true">
+                    Delete old photos --}}
+                    <input type="file" name="photos[]" class="form-control" multiple>
                 </div>
-                <input type="checkbox" name="delete" value="true">
-                Delete old photos
-                <input type="file" name="photos[]" class="form-control" multiple>
             </div>
             <button type="submit" class="btn btn-primary" style="margin: 5px 0 30px 0">Update</button>
         </form>

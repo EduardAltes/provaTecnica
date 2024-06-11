@@ -21,6 +21,7 @@
                     <th>Description</th>
                     <th>Categories</th>
                     <th>Num. photos</th>
+                    <th>Price</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -38,6 +39,7 @@
                         <td>
                             {{ $product->photos->count('photos') }}
                         </td>
+                        <td>{{ $product->prices->where('start_date', '<=', today())->where('end_date', '>=', today())->pluck('price')->first() }}</td>
                         <td>
                             <a href="{{ route('products.show', $product->id) }}" class="btn btn-info">Show</a>
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Edit</a>

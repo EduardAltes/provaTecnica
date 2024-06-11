@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 
+
 class UserSeeder extends Seeder
 {
     /**
@@ -15,8 +16,9 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Define the number of users you want to create
-        $numberOfUsers = 10;
+        User::factory()->create(['username' => "user"]);
 
+        $numberOfUsers = 10;
         // Use the User factory to create users
         User::factory()->count($numberOfUsers)->create();
     }
