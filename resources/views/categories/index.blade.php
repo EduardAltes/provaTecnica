@@ -2,7 +2,7 @@
 
 @section('title', 'categories')
 
-@include('partials.dataTable')
+@include('partials.dataTable', ["showButtons" => false])
 
 @section('content')
     <div class="container" style="margin-bottom: 30px">
@@ -20,7 +20,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Father ID</th>
-                    <th>Actions</th>
+                    <th class="no-export">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +30,7 @@
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->description }}</td>
                         <td>{{ $category->father_id }}</td>
-                        <td>
+                        <td class="no-export">
                             <a href="{{ route('categories.show', $category->id) }}" class="btn btn-info">Show</a>
                             <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">Edit</a>
                             <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline-block;">

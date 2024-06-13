@@ -6,12 +6,17 @@ class MenuController
 {
     public function categories()
     {
-        return view('categories.inndex');
+        return view('categories.index');
     }
 
     public function products()
     {
         return view('products.index');
+    }
+
+    public function calendar()
+    {
+        return view('calendar.index');
     }
 }
 

@@ -1,0 +1,14 @@
+{
+    "fontawesome": {
+        "normal": "fontawesome_normal_49e1d40cf18d1bd7699d20d58d3a0799"
+    },
+    "lato": {
+        "100": "C:\\laragon\\www\\provaTecnica\\storage\\fonts\/lato_100_d199396f4ce0363727c2bd69125fe3c8",
+        "300": "C:\\laragon\\www\\provaTecnica\\storage\\fonts\/lato_300_5a1b3affd6853f9ba40d774b7deb384c",
+        "normal": "C:\\laragon\\www\\provaTecnica\\storage\\fonts\/lato_normal_1e76f4095824347c5952fde032e6e608",
+        "bold": "lato_bold_86e1573850012e2276a75106baf0c899"
+    },
+    "glyphicons halflings": {
+        "normal": "glyphicons_halflings_normal_649b202ffed83c4604c4cf7c88e441bc"
+    }
+}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductController
 {
@@ -106,7 +107,7 @@ class ProductController
             ->with('success', 'Product created successfully.');
     }
 
-    public function show(Product $product, )
+    public function show(Product $product )
     {
         return view('products.show', compact('product'));
     }
@@ -196,5 +197,18 @@ class ProductController
 
         return redirect()->route('products.index')
             ->with('success', 'Product deleted successfully.');
+    }
+
+    public function generatePDF($id)
+    {
+        $product = Product::findOrFail($id);
+
+        $hideInPdf = true;
+
+        // Load the view and pass the product data
+        $pdf = PDF::loadView('products.show', compact('product', 'hideInPdf'));
+
+        // Return the generated PDF to the browser
+        return $pdf->download('product.pdf');
     }
 }

@@ -27,9 +27,13 @@ class ProductsHavePhotosSeeder extends Seeder
          foreach ($products as $product) {
             $numPhotos = rand(0, 3); // Generate a random number of photos between 0 and 3
             for ($i = 0; $i < $numPhotos; $i++) {
-                ProductsHavePhotos::factory()->create([
-                    'product_id' => $product->id,
-                ]);
+                try {
+                    ProductsHavePhotos::factory()->create([
+                        'product_id' => $product->id,
+                    ]);
+                } catch (\Exception $e) {
+                
+                }
             }
         }
     }

@@ -8,3 +8,9 @@
     background-color:#6c757d;
     border-color:#6c757d;
 }
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

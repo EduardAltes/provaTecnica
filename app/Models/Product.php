@@ -24,4 +24,10 @@ class Product extends Model
   {
     return $this->hasMany(ProductsHavePrices::class, 'product_id');
   }
+
+  public function events()
+  {
+    return $this->belongsToMany(Event::class, 'events_have_products', 'event_id', 'product_id');
+  }
+  
 }

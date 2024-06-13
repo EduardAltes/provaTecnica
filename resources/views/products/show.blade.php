@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="container">
+        <a href="{{ route('products.pdf', $product->id) }}" class="btn btn-primary" @if (isset($hideInPdf)) style="display: none;" @endif>Download PDF</a>
         <h1>Product Details</h1>
         <div class="card">
             <div class="card-header">
@@ -22,9 +23,11 @@
                             · {{ $category->name }}</p>
                     
                             @foreach($category->children as $child)
-                                <p>&emsp;
-                                · {{ $child->name }}</p>
-                                @include('products.partials._p', ['category' => $child, "tabs" => 2])
+                                @if  ($product->categories()->where('id', $child->id)->exists())
+                                    <p>&emsp;
+                                    · {{ $child->name }}</p>
+                                    @include('products.partials._p', ['category' => $child, "product" => $product, "tabs" => 2])
+                                @endif
                             @endforeach                      
                         @endif
                     @endforeach
@@ -39,7 +42,7 @@
                     @endforeach
                 </div>
             @endif
-            <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>
+            <a href="{{ route('products.index') }}" class="btn btn-secondary" @if (isset($hideInPdf)) style="display: none;" @endif>Back</a>
         </div>  
     </div>
 @endsection

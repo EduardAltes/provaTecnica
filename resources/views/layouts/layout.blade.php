@@ -28,7 +28,7 @@
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" @if (isset($hideInPdf)) style="display: none;" @endif>
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->

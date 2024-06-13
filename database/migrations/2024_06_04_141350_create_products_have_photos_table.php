@@ -15,7 +15,7 @@ return new class extends Migration
             $table->binary('photo');
             $table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');;
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
