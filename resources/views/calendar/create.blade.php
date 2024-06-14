@@ -13,7 +13,7 @@
             @csrf
             <div class="form-group">
                 <label for="name">Date</label>
-                <input type="date" name="date" class="form-control" required>
+                <input type="date" name="date" class="form-control" @if (!is_null($date)) value="{{ $date }}" @endif required>
             </div>
             <div class="form-group">
                 <label for="products[]">Products</label>

@@ -21,6 +21,8 @@ Route::middleware(['correctUser'])->group(function () {
     
     Route::resource('products', ProductController::class);
 
+    Route::get('/calendar/create/{date}', [CalendarController::class, 'create']);
+
     Route::get('/products/{id}/pdf', [ProductController::class, 'generatePdf'])->name('products.pdf');
 
     Route::resource('calendar', CalendarController::class);

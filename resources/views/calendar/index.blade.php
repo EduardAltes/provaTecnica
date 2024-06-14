@@ -26,7 +26,12 @@
 
         eventClick: function(info) {
             window.location.href = '/calendar/' + info.event.extendedProps.event.id;
-        }
+        },
+
+        dateClick: function(info) {
+            console.log(info.dateStr);
+            window.location.href = '/calendar/create/' + info.dateStr;
+        },
 
       });
       

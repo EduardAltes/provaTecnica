@@ -62,13 +62,13 @@ class ProductController
                 $start_date = $start_dates[$i] ?? null;
                 $end_date = $end_dates[$i] ?? null;
 
-                if (!is_null($price) || !is_null($start_date) || !is_null($end_date) ) {
-                    $product->prices()->create([
-                        'price' => $price,
-                        'start_date' => $start_date,
-                        'end_date' => $end_date
-                    ]);
-                }
+
+                $product->prices()->create([
+                    'price' => $price,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date
+                ]);
+                
             }
         }
 
@@ -115,17 +115,22 @@ class ProductController
         ]);
     
         $product->update($request->all());
-    
+        
+        // Deletes all $product categories relationships 
         $product->categories()->detach();
-        $categories = $request->input('categories');
 
+        // Creates the new relationsips
+        $categories = $request->input('categories');
         if($request->has('categories')) {
             foreach ($categories as $category) {
                 $product->categories()->attach($category);
             }
         }
+
+        // Deletes all $product prices 
         $product->prices()->delete();
 
+        // Creates the new prices for $product
         $prices = $request->input('prices');
         $start_dates = $request->input('start_dates');
         $end_dates = $request->input('end_dates');
@@ -136,18 +141,19 @@ class ProductController
                 $start_date = $start_dates[$i] ?? null;
                 $end_date = $end_dates[$i] ?? null;
 
-                if (!is_null($price) || !is_null($start_date) || !is_null($end_date)) {
-                    $product->prices()->create([
-                        'price' => $price,
-                        'start_date' => $start_date,
-                        'end_date' => $end_date
-                    ]);
-                }
+ 
+                $product->prices()->create([
+                    'price' => $price,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date
+                ]);
+            
             }
         }
        
         $photos64 = $request->input('photos64');
         
+        // Delete all $product photos
         $product->photos()->delete();
 
         if ($request->has('photos64')) {
@@ -155,6 +161,7 @@ class ProductController
                 $product->photos()->create(['photo' => base64_decode($photo)]);
             }
         }
+
 
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {

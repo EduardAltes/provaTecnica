@@ -33,26 +33,27 @@ class CalendarController
     }
 
 
-    public function create()
+    public function create($date = null)
     {   
         $products = Product::all();
-
-        return view('calendar.create', compact('products'));
+        
+        return view('calendar.create', compact('products', 'date'));
     }
 
     public function store(Request $request)
     {   
         
         $request->validate([
-            'date' => 'date',
-            'units' => 'array',
+            'date' => 'required|date',
+            'units' => 'required|array',
             'units.*' => 'integer|min:1',
-            'products' => 'array',
+            'products' => 'required|array',
             'products.*' => 'integer|exists:products,id',
         ]);
             
         $event = Event::create($request->all());
 
+        // Creates the new relations between the event and it's products
         $products = $request->input('products');
         $units = $request->input('units');
 
@@ -68,7 +69,7 @@ class CalendarController
 
     public function destroy($id)
     {   
-        $event = Event::all()->find($id)->delete();
+        Event::all()->find($id)->delete();
 
         return redirect()->route('calendar.index')
             ->with('success', 'Event deleted successfully.');

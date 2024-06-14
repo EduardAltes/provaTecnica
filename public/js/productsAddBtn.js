@@ -19,6 +19,9 @@ window.addEventListener('load', function() {
         deleteBtn.style = 'background-color: rgb(207, 52, 52); margin: 10px 0';
         deleteBtn.textContent = 'Delete';
         
+        // Delete the input value
+        clonedSelect.querySelector('input').value = '';
+
         // Append the cloned select and delete button to the wrapper
         wrapper.appendChild(clonedSelect);
         wrapper.appendChild(deleteBtn);
