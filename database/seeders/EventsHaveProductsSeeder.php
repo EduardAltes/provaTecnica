@@ -5,14 +5,23 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Event;
+use Faker\Generator as Faker;
 
 class EventsHaveProductsSeeder extends Seeder
 {
+    protected $faker;
+
+    public function __construct(Faker $faker)
+    {
+        $this->faker = $faker;
+    }
+    
     /**
      * Run the database seeds.
      */
     public function run()
     {
+        
         $products = Product::all();
         $events = Event::pluck('id')->all();
 
@@ -29,7 +38,8 @@ class EventsHaveProductsSeeder extends Seeder
                 $event_id = $events[array_rand($events)]; // Select a random event ID
 
                 if (!$product->events()->where('event_id', $event_id)->exists()) {
-                    $product->events()->attach($event_id);
+                    $units = $this->faker->numberBetween(1, 10);
+                    $product->events()->attach($event_id, ['units' => $units]);
                 }
             }
         }

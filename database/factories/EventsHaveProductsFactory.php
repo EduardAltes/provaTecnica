@@ -19,6 +19,7 @@ class ProductsHaveCategoriesFactory extends Factory
         return [
             'product_id' => Product::factory(),
             'event_id' => Event::factory(),
+            'units' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

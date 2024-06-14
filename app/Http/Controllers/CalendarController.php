@@ -36,6 +36,7 @@ class CalendarController
     public function create()
     {   
         $products = Product::all();
+
         return view('calendar.create', compact('products'));
     }
 
@@ -43,13 +44,26 @@ class CalendarController
     {   
         
         $request->validate([
-            'units' => 'required|integer',
             'date' => 'date',
-            ''
+            'units' => 'array',
+            'units.*' => 'integer|min:1',
+            'products' => 'array',
+            'products.*' => 'integer|exists:products,id',
         ]);
+            
+        $event = Event::create($request->all());
+
+        $products = $request->input('products');
+        $units = $request->input('units');
+
+        if($request->has('products') && $request->has('units')) {
+            foreach ($products as $key => $product) {
+                $event->products()->attach($product, ['units' => $units[$key]]);
+            }
+        }
 
         return redirect()->route('calendar.index')
-            ->with('success', 'Event deleted successfully.');
+            ->with('success', 'Event created successfully.');
     }
 
     public function destroy($id)

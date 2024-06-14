@@ -1,31 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 
-class ProductController
+class ProductAPIController
 {
-    
     public function index()
     {
         $products = Product::all();
-
-        return view('products.index', compact('products'));
+        return response()->json($products);
     }
 
-    public function create()
-    {
-        $categories = Category::all();
-        
-        return view('products.create', compact('categories'));
-    }
 
     public function store(Request $request)
-    {   
+    {
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'string',
@@ -40,29 +31,27 @@ class ProductController
             'photos' => 'array',
             'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
-        
+
         $product = Product::create($request->all());
 
-        // Attach categories to the products
         $categories = $request->input('categories');
-        if($request->has('categories')) {
+        if ($request->has('categories')) {
             foreach ($categories as $category) {
                 $product->categories()->attach($category);
             }
         }
 
-        // Create the prices of the product and attatches the relationship
         $prices = $request->input('prices');
         $start_dates = $request->input('start_dates');
         $end_dates = $request->input('end_dates');
-        
+
         if ($request->has('prices') && $request->has('start_dates') && $request->has('end_dates')) {
             for ($i = 0; $i < count($prices); $i++) {
                 $price = $prices[$i] ?? null;
                 $start_date = $start_dates[$i] ?? null;
                 $end_date = $end_dates[$i] ?? null;
 
-                if (!is_null($price) || !is_null($start_date) || !is_null($end_date) ) {
+                if (!is_null($price) || !is_null($start_date) || !is_null($end_date)) {
                     $product->prices()->create([
                         'price' => $price,
                         'start_date' => $start_date,
@@ -72,32 +61,24 @@ class ProductController
             }
         }
 
-        // Creates the photos of the product and attatches the relationship
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $photoBinary = file_get_contents($photo);
                 $product->photos()->create(['photo' => $photoBinary]);
             }
         }
-        
-        return redirect()->route('products.index')
-            ->with('success', 'Product created successfully.');
+
+        return response()->json(['message' => 'Product created successfully.'], 201);
     }
 
-    public function show(Product $product )
+    public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        return response()->json($product);
     }
 
-    public function edit(Product $product)
-    {   
-        $categories = Category::all();
-        return view('products.edit', compact('product', 'categories'));
-    }
 
     public function update(Request $request, Product $product)
-    {   
-
+    {
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'string',
@@ -113,17 +94,18 @@ class ProductController
             'photos' => 'array',
             'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
-    
+
         $product->update($request->all());
-    
+
         $product->categories()->detach();
         $categories = $request->input('categories');
 
-        if($request->has('categories')) {
+        if ($request->has('categories')) {
             foreach ($categories as $category) {
                 $product->categories()->attach($category);
             }
         }
+
         $product->prices()->delete();
 
         $prices = $request->input('prices');
@@ -145,9 +127,9 @@ class ProductController
                 }
             }
         }
-       
+
         $photos64 = $request->input('photos64');
-        
+
         $product->photos()->delete();
 
         if ($request->has('photos64')) {
@@ -163,28 +145,14 @@ class ProductController
             }
         }
 
-        return redirect()->route('products.index')
-            ->with('success', 'Product updated successfully.');
+        return response()->json(['message' => 'Product updated successfully.']);
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return redirect()->route('products.index')
-            ->with('success', 'Product deleted successfully.');
+        return response()->json(['message' => 'Product deleted successfully.']);
     }
 
-    public function generatePDF($id)
-    {
-        $product = Product::findOrFail($id);
-
-        $hideInPdf = true;
-
-        // Load the view and pass the product data
-        $pdf = PDF::loadView('products.show', compact('product', 'hideInPdf'));
-
-        // Return the generated PDF to the browser
-        return $pdf->download('product.pdf');
-    }
 }

@@ -27,7 +27,6 @@ class EventFactory extends Factory
 
          return [
              'date' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
-             'units' => $this->faker->numberBetween(1, 10),
          ];
      }
 }

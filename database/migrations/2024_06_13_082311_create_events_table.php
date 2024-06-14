@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->integer('units');
             // $table->decimal('cost', 10, 2);
 
             $table->timestamps();

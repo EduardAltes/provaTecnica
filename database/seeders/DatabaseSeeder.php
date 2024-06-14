@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             
             EventsHaveProductsSeeder::class,
             ProductsHaveCategoriesSeeder::class,
-            // ProductsHavePhotosSeeder::class,
+            ProductsHavePhotosSeeder::class,
             ProductsHavePricesSeeder::class,
             
         ]);

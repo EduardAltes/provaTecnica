@@ -7,9 +7,6 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login'])->name('submit');
@@ -30,6 +27,8 @@ Route::middleware(['correctUser'])->group(function () {
 
     
 });
+
+
 
 
 

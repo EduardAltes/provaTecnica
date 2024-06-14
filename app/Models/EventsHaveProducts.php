@@ -9,7 +9,7 @@ class EventsHaveProducts extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['event_id', 'product_id'];
+    protected $fillable = ['event_id', 'product_id', 'units'];
   
     public function product()
     {
