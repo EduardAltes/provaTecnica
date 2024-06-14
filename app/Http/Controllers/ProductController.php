@@ -156,13 +156,14 @@ class ProductController
         // Delete all $product photos
         $product->photos()->delete();
 
+        // The ones that existed before (not entered via file) are created again
         if ($request->has('photos64')) {
             foreach ($photos64 as $photo) {
                 $product->photos()->create(['photo' => base64_decode($photo)]);
             }
         }
 
-
+        // The ones thar are new (via file) are also created
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $photoBinary = file_get_contents($photo);

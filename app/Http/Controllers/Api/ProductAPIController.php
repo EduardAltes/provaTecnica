@@ -32,6 +32,7 @@ class ProductAPIController
             'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
+        // Attach categories to the products
         $product = Product::create($request->all());
 
         $categories = $request->input('categories');
@@ -41,6 +42,7 @@ class ProductAPIController
             }
         }
 
+         // Create the prices of the product and attatches the relationship
         $prices = $request->input('prices');
         $start_dates = $request->input('start_dates');
         $end_dates = $request->input('end_dates');
@@ -60,7 +62,8 @@ class ProductAPIController
                 }
             }
         }
-
+  
+        // Creates the photos of the product and attatches the relationship
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $photoBinary = file_get_contents($photo);
@@ -97,17 +100,21 @@ class ProductAPIController
 
         $product->update($request->all());
 
+        // Deletes all $product categories relationships 
         $product->categories()->detach();
-        $categories = $request->input('categories');
 
+        // Creates the new relationsips
+        $categories = $request->input('categories');
         if ($request->has('categories')) {
             foreach ($categories as $category) {
                 $product->categories()->attach($category);
             }
         }
 
+        // Deletes all $product prices
         $product->prices()->delete();
 
+        // Creates the new prices for $product
         $prices = $request->input('prices');
         $start_dates = $request->input('start_dates');
         $end_dates = $request->input('end_dates');
@@ -130,14 +137,17 @@ class ProductAPIController
 
         $photos64 = $request->input('photos64');
 
+        // Delete all $product photos
         $product->photos()->delete();
 
+        // The ones that existed before (not entered via file) are created again
         if ($request->has('photos64')) {
             foreach ($photos64 as $photo) {
                 $product->photos()->create(['photo' => base64_decode($photo)]);
             }
         }
 
+        // The ones thar are new (via file) are also created
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $photoBinary = file_get_contents($photo);
