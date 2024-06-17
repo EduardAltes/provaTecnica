@@ -22,7 +22,7 @@
                     <h4 style="text-decoration: underline">Units</h4>
                     {{$product->pivot->units}}
                     <h4 style="text-decoration: underline">Price</h4>
-                    {{$product->prices->where('start_date', '<=', today())->where('end_date', '>=', today())->pluck('price')->first()===null ? 'No actual price' : ($product->prices->where('start_date', '<=', today())->where('end_date', '>=', today())->pluck('price')->first() * $product->pivot->units) . ' €'}}
+                    {{$product->prices->where('start_date', '<=', $event->date)->where('end_date', '>=', $event->date)->pluck('price')->first()===null ? 'No actual price' : ($product->prices->where('start_date', '<=', $event->date)->where('end_date', '>=', $event->date)->pluck('price')->first() * $product->pivot->units) . ' €'}}
                     <div style="margin: 30px 0;">------------------------</div>
                 @endforeach
             </div>
