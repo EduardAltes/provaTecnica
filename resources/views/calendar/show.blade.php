@@ -30,8 +30,9 @@
         <form action="{{ route('calendar.destroy', $event->id) }}" method="POST" style="display:inline-block;">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger" style="margin-bottom: 30px">Delete</button>
+            <button type="submit" class="btn btn-danger" style="margin-bottom: 20px">Delete</button>
         </form>
         {{-- <a href="{{ route('calendar.edit', $event->id) }}" class="btn btn-warning" style="margin-bottom: 30px">Edit</a> --}}
+    </br><a href="{{ route('calendar.index') }}" class="btn btn-secondary" style="margin-bottom: 30px">Back</a>
     </div>
 @endsection
