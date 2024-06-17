@@ -33,6 +33,21 @@
                     @endforeach
                 </div>
             @endif
+            
+            @if($product->prices->isNotEmpty())
+                <h2>Prices</h2>
+                <div>
+                    @foreach ($product->prices as $price)
+                        <h4 style="text-decoration: underline">Start Date</h4>
+                        <p>{{ $price->start_date }}</p>
+                        <h4 style="text-decoration: underline">End Date</h4>
+                        <p>{{ $price->end_date }}</p> 
+                        <h4 style="text-decoration: underline">Price</h4>
+                        <p>{{ $price->price }}</p>
+                        <p>------------------------</p>
+                    @endforeach
+                </div>
+            @endif
 
             @if($product->photos->isNotEmpty())
                 <h2>Photos</h2>
