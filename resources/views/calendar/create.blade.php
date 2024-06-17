@@ -7,6 +7,15 @@
 @include('partials.apart', ["site" => "calendar"])
 
 @section('content')
+    @if ($errors->any())
+    <div class="alert alert-danger mt-2">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="container">
         <h1>Create Event</h1>
         <form action="{{ route('calendar.store') }}" method="POST" enctype="multipart/form-data">

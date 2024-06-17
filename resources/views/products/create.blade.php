@@ -12,17 +12,26 @@
 @include('partials.apart', ["site" => "products"])
 
 @section('content')
+    @if ($errors->any())
+    <div class="alert alert-danger mt-2">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="container">
         <h1>Create Product</h1>
         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" class="form-control" value="{{ old('description') }}" required>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" class="form-control" required></textarea>
+                <textarea name="description" class="form-control" required>{{ old('description') }}</textarea>
             </div>
             <div class="form-group">
                 <label for="categories">Categories</label><br/>

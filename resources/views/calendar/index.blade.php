@@ -29,8 +29,7 @@
         },
 
         dateClick: function(info) {
-            console.log(info.dateStr);
-            window.location.href = '/calendar/create/' + info.dateStr;
+            window.location.href = '/calendar/create/' + info.dateStr.substring(0, 10);
         },
 
       });

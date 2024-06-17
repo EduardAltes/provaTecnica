@@ -12,6 +12,15 @@
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger mt-2">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container">
         <h1>Edit Product</h1>
         <form action="{{ route('products.update', $product->id) }}" method="POST"  enctype="multipart/form-data">
